@@ -2,6 +2,8 @@
 
 Library to filter collections of data based on boolean logic filters.
 
+Look in `test` folders to see example usage.
+
 ### NPM scripts
 
  - `npm t`: Run test suite
