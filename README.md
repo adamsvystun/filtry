@@ -1,5 +1,7 @@
 # Filtry
 
+Library to filter collections of data based on boolean logic filters.
+
 ### NPM scripts
 
  - `npm t`: Run test suite

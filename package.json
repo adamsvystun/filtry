@@ -12,7 +12,7 @@
   "author": "Adam Svystun <adam.svystun@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/adamsvystun/filtry"
   },
   "license": "MIT",
   "engines": {
