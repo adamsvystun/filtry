@@ -1,8 +1,15 @@
 import { Collection, FilterType, EquationTreeType } from './types'
 import { buildTree } from './utils'
 
-const filterRowByEquation = (filterNode: EquationTreeType, row: Object): boolean => {
+const filterRowByEquation = (
+    filterNode: EquationTreeType,
+    row: Object,
+    getData: Function | null
+): boolean => {
     if (filterNode.type === 'equation') {
+        if (getData) {
+            row = getData(row)
+        }
         switch (filterNode.op) {
             case '===': {
                 // @ts-ignore
@@ -39,14 +46,14 @@ const filterRowByEquation = (filterNode: EquationTreeType, row: Object): boolean
         }
     } else if (filterNode.type === 'and') {
         for (let equation of Object.values(filterNode.equations)) {
-            if (!filterRowByEquation(equation, row)) {
+            if (!filterRowByEquation(equation, row, getData)) {
                 return false
             }
         }
         return true
     } else if (filterNode.type === 'or') {
         for (let equation of Object.values(filterNode.equations)) {
-            if (filterRowByEquation(equation, row)) {
+            if (filterRowByEquation(equation, row, getData)) {
                 return true
             }
         }
@@ -59,9 +66,13 @@ const buildFilterTree = (filter: FilterType): EquationTreeType => {
     return buildTree(filter.equations, filter.root) as EquationTreeType
 }
 
-const filter = (data: Collection, filter: FilterType) => {
+const filter = (
+    data: Collection,
+    filter: FilterType,
+    getData: Function | null = null
+): Collection => {
     let filterTree: EquationTreeType = buildFilterTree(filter)
-    let filterFunction = (row: any) => filterRowByEquation(filterTree, row)
+    let filterFunction = (row: any) => filterRowByEquation(filterTree, row, getData)
     return data.filter(filterFunction)
 }
 

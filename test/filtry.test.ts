@@ -206,4 +206,29 @@ describe('filter test', () => {
             { name: 'Marco', surname: 'Lenet', age: 18, human: true }
         ])
     })
+
+    it('getData argument works', () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'name',
+                    op: '===',
+                    value: 'Adam'
+                }
+            }
+        }
+        const data = [
+            { inside: { name: 'Adam', surname: 'Svystun', age: 21, human: true } },
+            { inside: { name: 'Adam', surname: 'Crutun', age: 250, human: false } },
+            { inside: { name: 'Marco', surname: 'Lenet', age: 18, human: true } }
+        ]
+        let filteredData = filter(data, equation, (row: any) => row.inside)
+        expect(filteredData).toEqual([
+            { inside: { name: 'Adam', surname: 'Svystun', age: 21, human: true } },
+            { inside: { name: 'Adam', surname: 'Crutun', age: 250, human: false } }
+        ])
+    })
 })
