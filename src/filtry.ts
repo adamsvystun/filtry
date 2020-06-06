@@ -43,6 +43,14 @@ const filterRowByEquation = (
                 // @ts-ignore
                 return !row[filterNode.key].includes(filterNode.value)
             }
+            case 'in': {
+                // @ts-ignore
+                return filterNode.value.includes(row[filterNode.key])
+            }
+            case '!in': {
+                // @ts-ignore
+                return !filterNode.value.includes(row[filterNode.key])
+            }
         }
         return false
     } else if (filterNode.type === 'and') {

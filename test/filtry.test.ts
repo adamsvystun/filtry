@@ -126,6 +126,26 @@ describe('filter test', () => {
         expect(filteredData).toEqual([{ name: 'Adam', surname: 'Crutun', age: 250, human: false }])
     })
 
+    it("operator '!==' works", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'age',
+                    op: '!==',
+                    value: 250
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([
+            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
+            { name: 'Marco', surname: 'Lenet', age: 18, human: true }
+        ])
+    })
+
     it("operator 'contains' works", () => {
         let equation: FilterType = {
             root: '1',
@@ -156,6 +176,43 @@ describe('filter test', () => {
                     key: 'surname',
                     op: '!contains',
                     value: 'tun'
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([{ name: 'Marco', surname: 'Lenet', age: 18, human: true }])
+    })
+
+    it("operator 'in' works", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'surname',
+                    op: 'in',
+                    value: ['Crutun', 'Svystun']
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([
+            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
+            { name: 'Adam', surname: 'Crutun', age: 250, human: false }
+        ])
+    })
+
+    it("operator '!in' works", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'surname',
+                    op: '!in',
+                    value: ['Crutun', 'Svystun']
                 }
             }
         }
@@ -222,6 +279,35 @@ describe('filter test', () => {
             { name: 'Adam', surname: 'Crutun', age: 250, human: false },
             { name: 'Marco', surname: 'Lenet', age: 18, human: true }
         ])
+    })
+
+    it("'or' equation with second null equation works", () => {
+        let equation: FilterType = {
+            root: '3',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'age',
+                    op: '>=',
+                    value: 250
+                },
+                '2': {
+                    id: '2',
+                    type: 'equation',
+                    key: null,
+                    op: null,
+                    value: null
+                },
+                '3': {
+                    id: '3',
+                    type: 'or',
+                    equations: ['1', '2']
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([{ name: 'Adam', surname: 'Crutun', age: 250, human: false }])
     })
 
     it('getData argument works', () => {

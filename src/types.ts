@@ -1,6 +1,16 @@
 export type Collection = Array<{}>
 
-export type OperatorType = '===' | '>' | '<' | '!==' | '<=' | '>=' | 'contains' | '!contains'
+export type OperatorType =
+    | '==='
+    | '>'
+    | '<'
+    | '!=='
+    | '<='
+    | '>='
+    | 'contains'
+    | '!contains'
+    | 'in'
+    | '!in'
 
 export type RegularEquationType = {
     id: string
