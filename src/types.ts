@@ -5,9 +5,9 @@ export type OperatorType = '===' | '>' | '<' | '!==' | '<=' | '>=' | 'contains' 
 export type RegularEquationType = {
     id: string
     type: 'equation'
-    key: string
-    op: OperatorType
-    value: any
+    key: string | null
+    op: OperatorType | null
+    value: any | null
 }
 
 export type OrEquationType = {

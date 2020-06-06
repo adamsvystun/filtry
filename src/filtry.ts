@@ -44,6 +44,7 @@ const filterRowByEquation = (
                 return !row[filterNode.key].includes(filterNode.value)
             }
         }
+        return false
     } else if (filterNode.type === 'and') {
         for (let equation of Object.values(filterNode.equations)) {
             if (!filterRowByEquation(equation, row, getData)) {

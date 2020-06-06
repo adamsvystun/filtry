@@ -31,6 +31,23 @@ describe('filter test', () => {
         ])
     })
 
+    it('filter with no operands works', () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: null,
+                    op: null,
+                    value: null
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([])
+    })
+
     it("operator '>' works", () => {
         let equation: FilterType = {
             root: '1',
