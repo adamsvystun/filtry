@@ -5,6 +5,7 @@ const d1 = {
     name: 'Adam',
     surname: 'Svystun',
     age: 21,
+    alien: true,
     human: true,
     birthday: new Date(2020, 5, 1)
 }
@@ -50,6 +51,41 @@ describe('filter test', () => {
                     key: null,
                     op: null,
                     value: null
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([])
+    })
+
+    it('filter through undefined values works', () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'alien',
+                    op: '===',
+                    value: true
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d1])
+    })
+
+    it('filter through undefined values with contains works', () => {
+        // This equation deosn't make sense on purpose
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'alien',
+                    op: 'contains',
+                    value: true
                 }
             }
         }

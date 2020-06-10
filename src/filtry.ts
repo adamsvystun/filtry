@@ -14,57 +14,59 @@ const filterRowByEquation = (
         if (filterNode.key === null || filterNode.op === null) {
             return false
         }
+        // @ts-ignore
+        const rowValue = row[filterNode.key]
         switch (filterNode.op) {
             case '===': {
                 if (isDate) {
-                    // @ts-ignore
-                    if (!row[filterNode.key] && filterNode.value) {
+                    if (!rowValue && filterNode.value) {
                         return false
                     }
                     if (!filterNode.value) {
                         return true
                     }
-                    // @ts-ignore
-                    return row[filterNode.key].getTime() === filterNode.value.getTime()
+                    return rowValue.getTime() === filterNode.value.getTime()
                 }
-                // @ts-ignore
-                return row[filterNode.key] === filterNode.value
+                return rowValue === filterNode.value
             }
             case '!==': {
-                // @ts-ignore
-                return row[filterNode.key] !== filterNode.value
+                return rowValue !== filterNode.value
             }
             case '<': {
-                // @ts-ignore
-                return row[filterNode.key] < filterNode.value
+                return rowValue < filterNode.value
             }
             case '>': {
-                // @ts-ignore
-                return row[filterNode.key] > filterNode.value
+                return rowValue > filterNode.value
             }
             case '<=': {
-                // @ts-ignore
-                return row[filterNode.key] <= filterNode.value
+                return rowValue <= filterNode.value
             }
             case '>=': {
-                // @ts-ignore
-                return row[filterNode.key] >= filterNode.value
+                return rowValue >= filterNode.value
             }
             case 'contains': {
-                // @ts-ignore
-                return row[filterNode.key].includes(filterNode.value)
+                if (rowValue == null || typeof rowValue.includes !== 'function') {
+                    return false
+                }
+                return rowValue.includes(filterNode.value)
             }
             case '!contains': {
-                // @ts-ignore
-                return !row[filterNode.key].includes(filterNode.value)
+                if (rowValue == null || typeof rowValue.includes !== 'function') {
+                    return true
+                }
+                return !rowValue.includes(filterNode.value)
             }
             case 'in': {
-                // @ts-ignore
-                return filterNode.value.includes(row[filterNode.key])
+                if (filterNode.value == null || typeof filterNode.value.includes !== 'function') {
+                    return false
+                }
+                return filterNode.value.includes(rowValue)
             }
             case '!in': {
-                // @ts-ignore
-                return !filterNode.value.includes(row[filterNode.key])
+                if (filterNode.value == null || typeof filterNode.value.includes !== 'function') {
+                    return true
+                }
+                return !filterNode.value.includes(rowValue)
             }
         }
         return false
