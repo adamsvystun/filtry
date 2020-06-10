@@ -7,11 +7,26 @@ const filterRowByEquation = (
     getData: Function | null
 ): boolean => {
     if (filterNode.type === 'equation') {
+        const isDate = filterNode.value instanceof Date
         if (getData) {
             row = getData(row)
         }
+        if (filterNode.key === null || filterNode.op === null) {
+            return false
+        }
         switch (filterNode.op) {
             case '===': {
+                if (isDate) {
+                    // @ts-ignore
+                    if (!row[filterNode.key] && filterNode.value) {
+                        return false
+                    }
+                    if (!filterNode.value) {
+                        return true
+                    }
+                    // @ts-ignore
+                    return row[filterNode.key].getTime() === filterNode.value.getTime()
+                }
                 // @ts-ignore
                 return row[filterNode.key] === filterNode.value
             }

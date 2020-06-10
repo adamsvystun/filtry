@@ -1,11 +1,23 @@
 import filter from '../src/filtry'
 import { FilterType } from '../src/types'
 
-const data = [
-    { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-    { name: 'Adam', surname: 'Crutun', age: 250, human: false },
-    { name: 'Marco', surname: 'Lenet', age: 18, human: true }
-]
+const d1 = {
+    name: 'Adam',
+    surname: 'Svystun',
+    age: 21,
+    human: true,
+    birthday: new Date(2020, 5, 1)
+}
+const d2 = {
+    name: 'Adam',
+    surname: 'Crutun',
+    age: 250,
+    human: false,
+    birthday: new Date(2020, 5, 1, 12, 31, 22, 900)
+}
+const d3 = { name: 'Marco', surname: 'Lenet', age: 18, human: true, birthday: new Date(2020, 6, 1) }
+
+const data = [d1, d2, d3]
 
 /**
  * filter test
@@ -25,10 +37,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false }
-        ])
+        expect(filteredData).toEqual([d1, d2])
     })
 
     it('filter with no operands works', () => {
@@ -71,10 +80,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false }
-        ])
+        expect(filteredData).toEqual([d1, d2])
     })
 
     it("operator '<' works", () => {
@@ -91,10 +97,24 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Marco', surname: 'Lenet', age: 18, human: true }
-        ])
+        expect(filteredData).toEqual([d1, d3])
+    })
+
+    it("operator '<' works on date", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'birthday',
+                    op: '<',
+                    value: new Date(2020, 5, 1, 13)
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d1, d2])
     })
 
     it("operator '<=' works", () => {
@@ -111,11 +131,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false },
-            { name: 'Marco', surname: 'Lenet', age: 18, human: true }
-        ])
+        expect(filteredData).toEqual([d1, d2, d3])
     })
 
     it("operator '>=' works", () => {
@@ -132,7 +148,24 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([{ name: 'Adam', surname: 'Crutun', age: 250, human: false }])
+        expect(filteredData).toEqual([d2])
+    })
+
+    it("operator '===' works on dates", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'birthday',
+                    op: '===',
+                    value: new Date(2020, 5, 1)
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d1])
     })
 
     it("operator '!==' works", () => {
@@ -149,10 +182,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Marco', surname: 'Lenet', age: 18, human: true }
-        ])
+        expect(filteredData).toEqual([d1, d3])
     })
 
     it("operator 'contains' works", () => {
@@ -169,10 +199,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false }
-        ])
+        expect(filteredData).toEqual([d1, d2])
     })
 
     it("operator '!contains' works", () => {
@@ -189,7 +216,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([{ name: 'Marco', surname: 'Lenet', age: 18, human: true }])
+        expect(filteredData).toEqual([d3])
     })
 
     it("operator 'in' works", () => {
@@ -206,10 +233,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Svystun', age: 21, human: true },
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false }
-        ])
+        expect(filteredData).toEqual([d1, d2])
     })
 
     it("operator '!in' works", () => {
@@ -226,7 +250,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([{ name: 'Marco', surname: 'Lenet', age: 18, human: true }])
+        expect(filteredData).toEqual([d3])
     })
 
     it("'and' equation works", () => {
@@ -255,7 +279,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([{ name: 'Adam', surname: 'Crutun', age: 250, human: false }])
+        expect(filteredData).toEqual([d2])
     })
 
     it("'or' equation works", () => {
@@ -284,10 +308,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([
-            { name: 'Adam', surname: 'Crutun', age: 250, human: false },
-            { name: 'Marco', surname: 'Lenet', age: 18, human: true }
-        ])
+        expect(filteredData).toEqual([d2, d3])
     })
 
     it("'or' equation with second null equation works", () => {
@@ -316,7 +337,7 @@ describe('filter test', () => {
             }
         }
         let filteredData = filter(data, equation)
-        expect(filteredData).toEqual([{ name: 'Adam', surname: 'Crutun', age: 250, human: false }])
+        expect(filteredData).toEqual([d2])
     })
 
     it('getData argument works', () => {
@@ -332,15 +353,8 @@ describe('filter test', () => {
                 }
             }
         }
-        const data = [
-            { inside: { name: 'Adam', surname: 'Svystun', age: 21, human: true } },
-            { inside: { name: 'Adam', surname: 'Crutun', age: 250, human: false } },
-            { inside: { name: 'Marco', surname: 'Lenet', age: 18, human: true } }
-        ]
+        const data = [{ inside: d1 }, { inside: d2 }, { inside: d3 }]
         let filteredData = filter(data, equation, (row: any) => row.inside)
-        expect(filteredData).toEqual([
-            { inside: { name: 'Adam', surname: 'Svystun', age: 21, human: true } },
-            { inside: { name: 'Adam', surname: 'Crutun', age: 250, human: false } }
-        ])
+        expect(filteredData).toEqual([{ inside: d1 }, { inside: d2 }])
     })
 })
