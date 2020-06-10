@@ -80,6 +80,9 @@ const filter = (
     filter: FilterType,
     getData: Function | null = null
 ): Collection => {
+    if (filter.root === null || filter.root === undefined) {
+        return data
+    }
     let filterTree: EquationTreeType = buildFilterTree(filter)
     let filterFunction = (row: any) => filterRowByEquation(filterTree, row, getData)
     return data.filter(filterFunction)

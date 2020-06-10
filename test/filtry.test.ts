@@ -48,6 +48,15 @@ describe('filter test', () => {
         expect(filteredData).toEqual([])
     })
 
+    it('filter with root null is treated as no filter', () => {
+        let equation: FilterType = {
+            root: null,
+            equations: {}
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual(data)
+    })
+
     it("operator '>' works", () => {
         let equation: FilterType = {
             root: '1',

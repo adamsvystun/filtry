@@ -52,7 +52,7 @@ export type EquationType = AndEquationType | OrEquationType | RegularEquationTyp
 export type EquationTreeType = AndEquationTreeType | OrEquationTreeType | RegularEquationType
 
 export type FilterType = {
-    root: string
+    root: string | null | undefined
     equations: {
         [id: string]: EquationType | undefined
     }
