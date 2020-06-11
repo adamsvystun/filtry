@@ -32,6 +32,12 @@ const filterRowByEquation = (
             case '!==': {
                 return rowValue !== filterNode.value
             }
+            case 'isnull': {
+                return rowValue == null
+            }
+            case '!isnull': {
+                return rowValue != null
+            }
             case '<': {
                 return rowValue < filterNode.value
             }

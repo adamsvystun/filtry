@@ -58,6 +58,23 @@ describe('filter test', () => {
         expect(filteredData).toEqual([])
     })
 
+    it('filter isnull works', () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'alien',
+                    op: 'isnull',
+                    value: null
+                }
+            }
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d2, d3])
+    })
+
     it('filter through undefined values works', () => {
         let equation: FilterType = {
             root: '1',

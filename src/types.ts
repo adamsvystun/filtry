@@ -7,6 +7,8 @@ export type OperatorType =
     | '!=='
     | '<='
     | '>='
+    | 'isnull'
+    | '!isnull'
     | 'contains'
     | '!contains'
     | 'in'
