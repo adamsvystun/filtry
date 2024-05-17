@@ -45,6 +45,14 @@
       "path": "node_modules/cz-conventional-changelog"
     }
   },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"
@@ -87,6 +95,10 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/github": "^10.0.4",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^13.0.0",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.11.0",
     "colors": "^1.4.0",
