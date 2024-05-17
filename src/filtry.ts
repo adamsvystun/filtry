@@ -4,7 +4,7 @@ import { buildTree } from './utils'
 const filterRowByEquation = (
     filterNode: EquationTreeType,
     row: Object,
-    getData: Function | null
+    getData: Function | null,
 ): boolean => {
     if (filterNode.type === 'equation') {
         const isDate = filterNode.value instanceof Date
@@ -74,6 +74,24 @@ const filterRowByEquation = (
                 }
                 return !filterNode.value.includes(rowValue)
             }
+            case 'length>': {
+                if (filterNode.value == null || typeof rowValue.length !== 'number') {
+                    return false
+                }
+                return rowValue.length > filterNode.value
+            }
+            case 'length<': {
+                if (filterNode.value == null || typeof rowValue.length !== 'number') {
+                    return false
+                }
+                return rowValue.length < filterNode.value
+            }
+            case 'length=': {
+                if (filterNode.value == null || typeof rowValue.length !== 'number') {
+                    return false
+                }
+                return rowValue.length === filterNode.value
+            }
         }
         return false
     } else if (filterNode.type === 'and') {
@@ -101,7 +119,7 @@ const buildFilterTree = (filter: FilterType): EquationTreeType => {
 const filter = (
     data: Collection,
     filter: FilterType,
-    getData: Function | null = null
+    getData: Function | null = null,
 ): Collection => {
     if (filter.root === null || filter.root === undefined) {
         return data

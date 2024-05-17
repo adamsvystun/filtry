@@ -7,16 +7,25 @@ const d1 = {
     age: 21,
     alien: true,
     human: true,
-    birthday: new Date(2020, 5, 1)
+    phones: ['123', '456'],
+    birthday: new Date(2020, 5, 1),
 }
 const d2 = {
     name: 'Adam',
     surname: 'Crutun',
     age: 250,
     human: false,
-    birthday: new Date(2020, 5, 1, 12, 31, 22, 900)
+    phones: ['789', '101', '123'],
+    birthday: new Date(2020, 5, 1, 12, 31, 22, 900),
 }
-const d3 = { name: 'Marco', surname: 'Lenet', age: 18, human: true, birthday: new Date(2020, 6, 1) }
+const d3 = {
+    name: 'Marco',
+    surname: 'Lenet',
+    age: 18,
+    phones: [],
+    human: true,
+    birthday: new Date(2020, 6, 1),
+}
 
 const data = [d1, d2, d3]
 
@@ -33,9 +42,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'name',
                     op: '===',
-                    value: 'Adam'
-                }
-            }
+                    value: 'Adam',
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2])
@@ -50,9 +59,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: null,
                     op: null,
-                    value: null
-                }
-            }
+                    value: null,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([])
@@ -67,9 +76,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'alien',
                     op: 'isnull',
-                    value: null
-                }
-            }
+                    value: null,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d2, d3])
@@ -84,9 +93,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'alien',
                     op: '===',
-                    value: true
-                }
-            }
+                    value: true,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1])
@@ -102,9 +111,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'alien',
                     op: 'contains',
-                    value: true
-                }
-            }
+                    value: true,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([])
@@ -113,7 +122,7 @@ describe('filter test', () => {
     it('filter with root null is treated as no filter', () => {
         let equation: FilterType = {
             root: null,
-            equations: {}
+            equations: {},
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual(data)
@@ -128,9 +137,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '>',
-                    value: 18
-                }
-            }
+                    value: 18,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2])
@@ -145,9 +154,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '<',
-                    value: 250
-                }
-            }
+                    value: 250,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d3])
@@ -162,9 +171,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'birthday',
                     op: '<',
-                    value: new Date(2020, 5, 1, 13)
-                }
-            }
+                    value: new Date(2020, 5, 1, 13),
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2])
@@ -179,9 +188,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '<=',
-                    value: 250
-                }
-            }
+                    value: 250,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2, d3])
@@ -196,9 +205,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '>=',
-                    value: 250
-                }
-            }
+                    value: 250,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d2])
@@ -213,9 +222,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'birthday',
                     op: '===',
-                    value: new Date(2020, 5, 1)
-                }
-            }
+                    value: new Date(2020, 5, 1),
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1])
@@ -230,9 +239,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '!==',
-                    value: 250
-                }
-            }
+                    value: 250,
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d3])
@@ -247,9 +256,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'surname',
                     op: 'contains',
-                    value: 'tun'
-                }
-            }
+                    value: 'tun',
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2])
@@ -264,9 +273,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'surname',
                     op: '!contains',
-                    value: 'tun'
-                }
-            }
+                    value: 'tun',
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d3])
@@ -281,9 +290,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'surname',
                     op: 'in',
-                    value: ['Crutun', 'Svystun']
-                }
-            }
+                    value: ['Crutun', 'Svystun'],
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d1, d2])
@@ -298,12 +307,114 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'surname',
                     op: '!in',
-                    value: ['Crutun', 'Svystun']
-                }
-            }
+                    value: ['Crutun', 'Svystun'],
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d3])
+    })
+
+    it("operator 'length>' works on string", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'surname',
+                    op: 'length>',
+                    value: 5,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d1, d2])
+    })
+
+    it("operator 'length<' works on string", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'surname',
+                    op: 'length<',
+                    value: 6,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d3])
+    })
+
+    it("operator 'length=' works on string", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'surname',
+                    op: 'length=',
+                    value: 7,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d1])
+    })
+
+    it("operator 'length>' works on array", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'phones',
+                    op: 'length>',
+                    value: 2,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d2])
+    })
+
+    it("operator 'length<' works on array", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'phones',
+                    op: 'length<',
+                    value: 2,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d3])
+    })
+
+    it("operator 'length=' works on array", () => {
+        let equation: FilterType = {
+            root: '1',
+            equations: {
+                '1': {
+                    id: '1',
+                    type: 'equation',
+                    key: 'phones',
+                    op: 'length=',
+                    value: 3,
+                },
+            },
+        }
+        let filteredData = filter(data, equation)
+        expect(filteredData).toEqual([d2])
     })
 
     it("'and' equation works", () => {
@@ -315,21 +426,21 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '>=',
-                    value: 250
+                    value: 250,
                 },
                 '2': {
                     id: '2',
                     type: 'equation',
                     key: 'name',
                     op: '===',
-                    value: 'Adam'
+                    value: 'Adam',
                 },
                 '3': {
                     id: '3',
                     type: 'and',
-                    equations: ['1', '2']
-                }
-            }
+                    equations: ['1', '2'],
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d2])
@@ -344,21 +455,21 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '>=',
-                    value: 250
+                    value: 250,
                 },
                 '2': {
                     id: '2',
                     type: 'equation',
                     key: 'age',
                     op: '<',
-                    value: 20
+                    value: 20,
                 },
                 '3': {
                     id: '3',
                     type: 'or',
-                    equations: ['1', '2']
-                }
-            }
+                    equations: ['1', '2'],
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d2, d3])
@@ -373,21 +484,21 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'age',
                     op: '>=',
-                    value: 250
+                    value: 250,
                 },
                 '2': {
                     id: '2',
                     type: 'equation',
                     key: null,
                     op: null,
-                    value: null
+                    value: null,
                 },
                 '3': {
                     id: '3',
                     type: 'or',
-                    equations: ['1', '2']
-                }
-            }
+                    equations: ['1', '2'],
+                },
+            },
         }
         let filteredData = filter(data, equation)
         expect(filteredData).toEqual([d2])
@@ -402,9 +513,9 @@ describe('filter test', () => {
                     type: 'equation',
                     key: 'name',
                     op: '===',
-                    value: 'Adam'
-                }
-            }
+                    value: 'Adam',
+                },
+            },
         }
         const data = [{ inside: d1 }, { inside: d2 }, { inside: d3 }]
         let filteredData = filter(data, equation, (row: any) => row.inside)

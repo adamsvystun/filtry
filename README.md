@@ -6,6 +6,8 @@ Look in `test` folders to see example usage.
 
 ### NPM scripts
 
+Use Node.js v20.
+
  - `npm t`: Run test suite
  - `npm start`: Run `npm run build` in watch mode
  - `npm run test:watch`: Run test suite in [interactive watch mode](http://facebook.github.io/jest/docs/cli.html#watch)

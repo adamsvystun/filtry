@@ -13,6 +13,9 @@ export type OperatorType =
     | '!contains'
     | 'in'
     | '!in'
+    | 'length>'
+    | 'length<'
+    | 'length='
 
 export type RegularEquationType = {
     id: string
